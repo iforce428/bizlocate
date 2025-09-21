@@ -31,7 +31,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
   // New: Call backend API to get Bedrock response
   const fetchBedrockResponse = async (userMessage: string): Promise<string> => {
     try {
-      const res = await fetch('/api/bedrock-chat', {
+      const apiUrl = import.meta.env.VITE_API_URL || '/api/bedrock-chat';
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage }),
