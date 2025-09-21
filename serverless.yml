@@ -15,6 +15,3 @@ functions:
           path: /api/bedrock-chat
           method: post
           cors: true
-
-plugins:
-  - serverless-offline

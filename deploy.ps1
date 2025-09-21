@@ -29,8 +29,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "🌐 Creating Amplify app..." -ForegroundColor Yellow
 $appName = "location-analysis-app"
 
-# Create Amplify app
-$amplifyApp = aws amplify create-app --name $appName --platform WEB --build-spec (Get-Content amplify.yml -Raw) --custom-rules '[{"source":"/<*>","target":"/index.html","status":"404-200"}]' 2>$null
+# Create Amplify app with environment variables
+$amplifyApp = aws amplify create-app --name $appName --platform WEB --build-spec (Get-Content amplify.yml -Raw) --custom-rules '[{"source":"/<*>","target":"/index.html","status":"404-200"}]' --environment-variables VITE_GOOGLE_MAPS_API_KEY=AIzaSyCcdHqF_kBE-E9Fq3JuiCife-XImYsjGlQ 2>$null
 
 if ($amplifyApp) {
     $appId = ($amplifyApp | ConvertFrom-Json).app.appId
