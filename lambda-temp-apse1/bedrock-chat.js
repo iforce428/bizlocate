@@ -1,17 +1,19 @@
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+const { BedrockRuntimeClient, InvokeModelCommand } = require("@aws-sdk/client-bedrock-runtime");
 
 const bedrockClient = new BedrockRuntimeClient({
   region: process.env.AWS_REGION || 'ap-southeast-1'
 });
 
-export const handler = async (event) => {
+exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS'
   };
 
-  if (event.httpMethod === 'OPTIONS' || event.requestContext?.http?.method === 'OPTIONS') {
+  console.log('Event:', JSON.stringify(event, null, 2));
+
+  if (event.requestContext?.http?.method === 'OPTIONS') {
     return { 
       statusCode: 200, 
       headers: {
@@ -24,7 +26,17 @@ export const handler = async (event) => {
   }
 
   try {
-    const { message } = JSON.parse(event.body);
+    let message;
+    
+    if (event.body) {
+      const body = typeof event.body === 'string' ? JSON.parse(event.body) : event.body;
+      message = body.message;
+    } else if (event.message) {
+      message = event.message;
+    }
+    
+    console.log('Extracted message:', message);
+    
     if (!message) {
       return {
         statusCode: 400,
@@ -51,8 +63,16 @@ export const handler = async (event) => {
 
     const command = new InvokeModelCommand(input);
     const response = await bedrockClient.send(command);
-    const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-    const aiText = responseBody.output?.message?.content?.[0]?.text || 'No response.';
+    
+    let responseBody;
+    if (response.body) {
+      const bodyText = new TextDecoder().decode(response.body);
+      responseBody = JSON.parse(bodyText);
+    } else {
+      throw new Error('No response body from Bedrock');
+    }
+    
+    const aiText = responseBody.output?.message?.content?.[0]?.text || 'No response from AI.';
 
     return {
       statusCode: 200,
