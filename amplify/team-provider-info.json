@@ -1,14 +1,14 @@
 {
-  "prod": {
+  "main": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-locationanalysis-prod-authRole",
-      "UnauthRoleName": "amplify-locationanalysis-prod-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::235881043191:role/amplify-locationanalysis-prod-authRole",
-      "UnauthRoleArn": "arn:aws:iam::235881043191:role/amplify-locationanalysis-prod-unauthRole",
-      "DeploymentBucketName": "amplify-locationanalysis-prod-deployment",
+      "AuthRoleName": "amplify-bizlocate-main-authRole",
+      "UnauthRoleName": "amplify-bizlocate-main-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::235881043191:role/amplify-bizlocate-main-authRole",
+      "UnauthRoleArn": "arn:aws:iam::235881043191:role/amplify-bizlocate-main-unauthRole",
+      "DeploymentBucketName": "amplify-bizlocate-main-deployment",
       "Region": "us-east-1",
-      "StackName": "amplify-locationanalysis-prod",
-      "StackId": "arn:aws:cloudformation:us-east-1:235881043191:stack/amplify-locationanalysis-prod/12345678-1234-1234-1234-123456789012"
+      "StackName": "amplify-bizlocate-main",
+      "StackId": "arn:aws:cloudformation:us-east-1:235881043191:stack/amplify-bizlocate-main/12345678-1234-1234-1234-123456789012"
     }
   }
 }
